@@ -589,12 +589,170 @@ body{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
   .brand small{display:none}
 }
 
+/* =========================================================
+   ACABAMENTO PREMIUM (v2)
+   Sistema das 41 LPs aplicado sobre a identidade D'Paula, sem mudar a estrutura aprovada:
+   - sombras em camadas tingidas de ameixa (nunca cinza puro)
+   - flutuação lenta só nos selos (hero e dona)
+   - auréolas com função: puxar o olho para promessa, foto, serviço principal e fechamento
+   - títulos em dois tons + rótulo com traço
+   - borda em gradiente nos blocos de conversão e feixe circulando no formulário
+   ========================================================= */
+:root{
+  --soft:#8A7F86;  /* 2º tom dos títulos: 3.5:1+ nos fundos claros, só em corpo grande */
+  --sh-1:0 1px 2px rgba(43,34,48,.04), 0 6px 16px -8px rgba(43,34,48,.10);
+  --sh-2:0 2px 6px rgba(43,34,48,.05), 0 18px 40px -18px rgba(43,34,48,.20);
+  --sh-3:0 4px 10px rgba(43,34,48,.05), 0 34px 70px -30px rgba(43,34,48,.32);
+  --ring-grad:linear-gradient(135deg, rgba(var(--a),.42), rgba(var(--a),.08) 38%, rgba(var(--a),.08) 62%, rgba(var(--a),.28));
+}
+
+/* ---------- Títulos ---------- */
+h1,h2,h3,.statement{text-wrap:balance}
+p,li{text-wrap:pretty}
+.h2{line-height:1.06;letter-spacing:-.025em}
+.soft{color:var(--soft)}
+.results .soft{color:#A89BA4}
+.h1 em{
+  background:linear-gradient(100deg, var(--accent) 0%, #C4387F 48%, var(--accent-d) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  padding-bottom:.08em;
+}
+.label{display:inline-flex;align-items:center;gap:12px}
+.label::before{content:"";width:22px;height:1px;background:currentColor;opacity:.55;flex:none}
+[style*="text-align:center"] > .label::after{content:"";width:22px;height:1px;background:currentColor;opacity:.55;flex:none}
+@media (max-width:420px){.hero .label::before{display:none}.hero .label{letter-spacing:.14em}}
+.stat strong{font-weight:300;letter-spacing:-.04em}
+.form-head h3{font-weight:500}
+
+/* ---------- Botões ---------- */
+.btn-primary{
+  background:linear-gradient(180deg, #BF2E79 0%, var(--accent) 50%, #A01F62 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.22), var(--glow-sm), 0 10px 24px -12px rgba(var(--a),.55);
+}
+.btn-primary:hover{box-shadow:inset 0 1px 0 rgba(255,255,255,.22), var(--glow-md), 0 18px 34px -14px rgba(var(--a),.6)}
+.btn-primary:active{background:var(--accent-d)}
+.btn-ghost{background:rgba(255,255,255,.7);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:var(--sh-1)}
+.results .btn-ghost{background:transparent;box-shadow:none}
+
+/* ---------- Nav ganha sombra ao rolar ---------- */
+.nav{transition:box-shadow .3s var(--ease), background-color .3s var(--ease)}
+.nav.scrolled{background:rgba(255,248,251,.9);box-shadow:0 12px 32px -20px rgba(43,34,48,.28)}
+
+/* ---------- Hero: auréola + selos flutuando (os dois efeitos da tela) ---------- */
+.hero{position:relative;isolation:isolate}
+.hero::before{
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(ellipse 50% 60% at 80% 32%, rgba(255,195,231,.55), transparent 70%),
+    radial-gradient(ellipse 70% 50% at 15% -10%, rgba(255,195,231,.32), transparent 70%);
+}
+.visual::before{background:linear-gradient(165deg, #FFC3E7 0%, #FFD4EC 55%, #FFE6F3 100%)}
+.arch.has-photo{box-shadow:var(--sh-3)}
+@keyframes float{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(0,-10px,0)}}
+.float{
+  background:rgba(255,255,255,.86);border-color:rgba(var(--a),.14);
+  box-shadow:var(--sh-2);animation:float 6.5s ease-in-out infinite;
+}
+.f2,.o2{animation-duration:8s;animation-delay:-3s}
+
+/* ---------- Faixa de cidades ---------- */
+.cities li{display:flex;align-items:center;gap:10px}
+.cities li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--brand);flex:none}
+
+/* ---------- Cards: escavado + sombra que cresce no hover (sem brigar com o reveal) ---------- */
+.card{
+  box-shadow:inset 0 14px 22px -20px rgba(28,22,25,.18), var(--sh-1);
+  transition:border-color .15s var(--ease), translate .3s var(--ease-out);
+}
+.card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;box-shadow:var(--sh-2);opacity:0;transition:opacity .3s var(--ease)}
+.card:hover{translate:0 -3px}
+.card:hover::after{opacity:1}
+.is-on .icon{background:linear-gradient(135deg, rgba(var(--a),.12), rgba(255,195,231,.45))}
+.plan.featured{box-shadow:var(--glow-sm), var(--sh-3), inset 0 14px 22px -20px rgba(28,22,25,.18)}
+.step-n{background:linear-gradient(180deg,#FFFFFF,#FFF4FA);box-shadow:var(--sh-1)}
+.host-box,.included{box-shadow:var(--sh-1)}
+.contact-card{box-shadow:var(--sh-1)}
+.contact-card:hover{box-shadow:var(--sh-2)}
+
+/* ---------- Blocos de conversão: borda em gradiente por máscara ---------- */
+.svc-feature,.promise{position:relative;border-color:transparent}
+.svc-feature::before,.promise::before{
+  content:"";position:absolute;inset:-1px;padding:1px;border-radius:inherit;pointer-events:none;
+  background:var(--ring-grad);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+}
+.svc-feature{
+  background:radial-gradient(ellipse 55% 75% at 100% 0%, rgba(255,195,231,.38), transparent 65%), var(--card);
+  box-shadow:0 0 0 6px rgba(var(--a),.04), var(--sh-2);
+}
+.promise{
+  background:radial-gradient(ellipse 45% 70% at 0% 0%, rgba(255,195,231,.32), transparent 62%), var(--card);
+  box-shadow:var(--sh-2);
+}
+
+/* ---------- Formulário: feixe de luz circulando na borda (o momento memorável) ---------- */
+@property --beam{syntax:"<angle>";inherits:false;initial-value:0deg}
+@keyframes beam-spin{to{--beam:360deg}}
+.form{border-color:transparent;box-shadow:var(--sh-3), 0 30px 60px -40px rgba(var(--a),.35)}
+.form::before{
+  content:"";position:absolute;inset:-1px;padding:1.5px;border-radius:inherit;pointer-events:none;
+  background:conic-gradient(from var(--beam), rgba(var(--a),.16) 0deg, rgba(var(--a),.16) 240deg, var(--accent) 300deg, #FFC3E7 330deg, rgba(var(--a),.16) 360deg);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+  animation:beam-spin 7s linear infinite;
+}
+
+/* ---------- Antes e depois: luz de palco na seção escura ---------- */
+.results{position:relative;isolation:isolate;overflow:hidden}
+.results::before{
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 45% at 50% 0%, rgba(255,195,231,.14), transparent 70%),
+    radial-gradient(ellipse 60% 35% at 50% 100%, rgba(255,195,231,.06), transparent 70%);
+}
+.ba-img{box-shadow:0 0 0 1px rgba(255,195,231,.10), 0 30px 60px -30px rgba(0,0,0,.65)}
+.ba-chips button[aria-current="true"]{box-shadow:0 8px 24px -10px rgba(255,195,231,.55)}
+
+/* ---------- Dona: arco com contorno deslocado + selos flutuando ---------- */
+.owner-visual{position:relative;width:100%;max-width:min(360px, 70vw);margin-inline:auto;isolation:isolate}
+.owner-visual::before{
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  border-radius:9999px 9999px var(--r-block) var(--r-block);
+  border:1.5px solid rgba(var(--a),.28);transform:translate(-18px,18px);
+}
+.owner .owner-visual .arch{max-width:none;background:linear-gradient(170deg, #FFC3E7 0%, #FFDAEF 100%);box-shadow:var(--sh-3)}
+.o1{top:12%;right:-14%}
+.o2{bottom:9%;left:-16%}
+
+/* ---------- Fechamento: auréola atrás da pergunta ---------- */
+.closing{position:relative;isolation:isolate}
+.closing::before{
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(ellipse 70% 55% at 50% -10%, rgba(255,195,231,.55), transparent 70%);
+}
+
+/* ---------- Rodapé: linha que dissolve nas pontas ---------- */
+.footer{position:relative}
+.footer::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg, transparent, rgba(255,195,231,.55), transparent)}
+
+@media (min-width:900px){
+  .plan.featured{translate:0 -12px}
+  .plan.featured:hover{translate:0 -15px}
+}
+@media (max-width:899px){
+  .o1{right:-6%}
+  .o2{left:-6%}
+}
+
 /* Acessibilidade: desliga todo movimento */
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
   .js .reveal{animation:none;opacity:1;transform:none;filter:none}
   .rail::after,.dot::after{display:none}
+  .float{animation:none}
+  .form::before{animation:none}
 }
 </style>
 </head>
@@ -733,7 +891,7 @@ body{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
   <div class="wrap-wide">
     <div class="head">
       <span class="label reveal">The problem</span>
-      <h2 class="h2 reveal" style="--i:1">Keeping up with the house shouldn’t cost you your weekend.</h2>
+      <h2 class="h2 reveal" style="--i:1">Keeping up with the house <span class="soft">shouldn’t cost you your weekend.</span></h2>
     </div>
     <div class="grid-4">
       <article class="card reveal" style="--i:0">
@@ -765,7 +923,7 @@ body{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
   <div class="wrap-wide">
     <div class="head">
       <span class="label reveal">The Owner-Led Clean</span>
-      <h2 class="h2 reveal" style="--i:1">One owner, one standard, fixed for every problem above.</h2>
+      <h2 class="h2 reveal" style="--i:1">One owner, one standard, <span class="soft">fixed for every problem above.</span></h2>
     </div>
     <div class="grid-4">
       <article class="card is-on reveal" style="--i:0">
@@ -799,7 +957,7 @@ body{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
   <div class="wrap">
     <div class="head">
       <span class="label reveal">Before &amp; After</span>
-      <h2 class="h2 reveal" id="results-title" style="--i:1">Real homes. Real results.</h2>
+      <h2 class="h2 reveal" id="results-title" style="--i:1">Real homes. <span class="soft">Real results.</span></h2>
       <p class="reveal" style="--i:2">Photos from real D’Paula cleanings, room by room. Swipe, use the arrows or tap a room to compare.</p>
     </div>
     <div class="ba-bar reveal" style="--i:3">
@@ -875,7 +1033,7 @@ body{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
   <div class="wrap-steps">
     <div class="head">
       <span class="label reveal">How it works</span>
-      <h2 class="h2 reveal" style="--i:1">From first message to a clean home in four steps.</h2>
+      <h2 class="h2 reveal" style="--i:1">From first message to a clean home <span class="soft">in four steps.</span></h2>
     </div>
     <div class="steps-box">
     <span class="rail" aria-hidden="true"></span>
@@ -909,8 +1067,8 @@ body{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
          CONFIRMAR com a Nathalia os 3 itens de cada cartão antes de publicar. -->
     <div class="head">
       <span class="label reveal">Services</span>
-      <h2 class="h2 reveal" style="--i:1">Built around recurring care for your home.</h2>
-      <p class="lead reveal" style="--i:2">Recurring cleaning is what we do most. When your home needs something different, these services follow the same owner-led standard.</p>
+      <h2 class="h2 reveal" style="--i:1">Built around recurring care <span class="soft">for your home.</span></h2>
+      <p class="lead reveal" style="--i:2">Recurring cleaning is what we do most. When your home needs something different, these services follow the same owner&#8209;led standard.</p>
     </div>
 
     <article class="svc-feature reveal">
@@ -947,7 +1105,7 @@ body{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
       </article>
       <article class="card is-on svc-card reveal" style="--i:1">
         <span class="icon"><svg aria-hidden="true"><use href="#i-bed"/></svg></span>
-        <h3 class="h3">Airbnb &amp; short-term rentals</h3>
+        <h3 class="h3">Airbnb &amp; short&#8209;term rentals</h3>
         <p>Detailed turnovers between guests, so the property is ready for the next check-in.</p>
         <ul class="checks">
           <li><svg aria-hidden="true"><use href="#i-check"/></svg>Kitchen, bathrooms and living areas reset</li>
@@ -989,7 +1147,7 @@ body{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
   <div class="wrap-wide">
     <div class="head" style="text-align:center">
       <span class="label reveal">Choose your frequency</span>
-      <h2 class="h2 reveal" style="--i:1;margin-inline:auto">How often should your home be reset?</h2>
+      <h2 class="h2 reveal" style="--i:1;margin-inline:auto">How often should your home <span class="soft">be reset?</span></h2>
     </div>
     <div class="plans">
       <article class="card plan reveal" style="--i:0">
@@ -1052,7 +1210,7 @@ body{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
   <div class="wrap host">
     <div>
       <span class="label reveal">For Airbnb &amp; STR hosts</span>
-      <h2 class="h2 reveal" style="--i:1">Ready for the next check-in, every turnover.</h2>
+      <h2 class="h2 reveal" style="--i:1">Ready for the next check-in, <span class="soft">every turnover.</span></h2>
       <p class="body reveal" style="--i:2;margin-top:20px">Around three years of short-term rental turnovers. Hosts hire us for a detailed, dependable clean between guests, so the property is ready to receive the next one.</p>
       <div class="ctas reveal" style="--i:3">
         <a class="btn btn-primary" href="#quote" data-service="airbnb" data-track="cta_airbnb">Get a turnover quote</a>
@@ -1077,7 +1235,7 @@ body{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
 <section class="section">
   <div class="wrap">
     <span class="label reveal">Why clients stay</span>
-    <p class="statement reveal" style="--i:1">Clients keep us for the quality, the attention to detail, the punctuality and the trust of knowing their home is in good hands.</p>
+    <p class="statement reveal" style="--i:1">Clients keep us for the quality, the attention to detail, <span class="soft">the punctuality and the trust of knowing their home is in good hands.</span></p>
     <p class="cap reveal" style="--i:2">Families, busy professionals and short-term rental hosts across the Denver metro.</p>
     <!-- TROCAR: a cliente disse que enviou reviews, mas elas ainda não chegaram. Quando chegarem,
          descomente o bloco abaixo e cole o texto EXATO de cada review (nome como o cliente autorizou).
@@ -1096,16 +1254,26 @@ body{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
      Texto em primeira pessoa: PEDIR APROVAÇÃO da Nathalia antes de publicar. -->
 <section class="section alt" id="owner">
   <div class="wrap owner">
-    <div class="arch reveal">
+    <div class="owner-visual reveal">
+    <div class="arch">
       <!-- TROCAR (prioridade): retrato real da Nathalia, vertical 4:5, de preferência trabalhando ou sorrindo. Use:
            <img src="img/nathalia-800.webp" srcset="img/nathalia-800.webp 800w, img/nathalia-1200.webp 1200w" sizes="(min-width:900px) 360px, 90vw"
                 width="800" height="1000" alt="Nathalia, owner of D’Paula Cleaning Specialist" loading="lazy">
            e apague o <span class="mono-mark"> abaixo. -->
       <span class="mono-mark" aria-hidden="true">D’P</span>
     </div>
+      <div class="float o1">
+        <span class="ico"><svg aria-hidden="true"><use href="#i-msg"/></svg></span>
+        <span>Direct line by text<small>Nathalia, owner</small></span>
+      </div>
+      <div class="float o2">
+        <span class="ico"><svg aria-hidden="true"><use href="#i-person"/></svg></span>
+        <span>On every job<small>Even with support team</small></span>
+      </div>
+    </div>
     <div>
       <span class="label reveal">Meet the owner</span>
-      <h2 class="h2 reveal" style="--i:1">Hi, I’m Nathalia. I’m the person behind every clean.</h2>
+      <h2 class="h2 reveal" style="--i:1">Hi, I’m Nathalia. <span class="soft">I’m the person behind every clean.</span></h2>
       <p class="body reveal" style="--i:2;margin-top:20px">I built D’Paula through hands-on work: about five years cleaning homes and three years turning over short-term rentals. I still quote every home myself, lead and personally follow every job, and stay in direct control of anyone who helps me. If something isn’t right, you don’t get a call center. You text me.</p>
       <ul class="checks reveal" style="--i:3">
         <li><svg aria-hidden="true"><use href="#i-check"/></svg>I review every quote request personally</li>
@@ -1128,7 +1296,7 @@ body{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
       <div>
         <span class="seal"><svg aria-hidden="true"><use href="#i-shield"/></svg></span>
         <span class="label" style="margin-top:28px">Our promise</span>
-        <h2 class="h2" style="font-size:clamp(1.75rem,3.5vw,2.75rem)">If it’s not right, we make it right.</h2>
+        <h2 class="h2" style="font-size:clamp(1.75rem,3.5vw,2.75rem)">If it’s not right, <span class="soft">we make it right.</span></h2>
       </div>
       <div class="promise-list">
         <div>
@@ -1158,7 +1326,7 @@ body{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
   <div class="wrap quote">
     <div class="quote-side">
       <span class="label reveal">Free quote</span>
-      <h2 class="h2 reveal" style="--i:1">Tell us about your home. Get your price.</h2>
+      <h2 class="h2 reveal" style="--i:1">Tell us about your home. <span class="soft">Get your price.</span></h2>
       <p class="body reveal" style="--i:2;margin-top:20px">Fill out the short form and Nathalia will review it personally and send a quote built for your home, by text or email. Prefer to reach out directly? Use the options below.</p>
       <!-- TROCAR: se a cliente definir prazo de resposta, acrescentar "Replies within X hours". -->
       <div class="contact-cards reveal" style="--i:3">
@@ -1321,11 +1489,11 @@ body{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
 </section>
 
 <!-- 12. FECHAMENTO: futuro comparado, título em pergunta, mesmo botão -->
-<section class="section alt">
+<section class="section alt closing">
   <div class="wrap">
     <div style="text-align:center">
       <span class="label reveal">Your next weekend</span>
-      <h2 class="h2 reveal" style="--i:1;margin-inline:auto">What would your week feel like with the house already done?</h2>
+      <h2 class="h2 reveal" style="--i:1;margin-inline:auto">What would your week feel like <span class="soft">with the house already done?</span></h2>
     </div>
     <div class="close-grid">
       <div class="col without reveal">
@@ -1425,6 +1593,13 @@ body{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
     });
   }, { threshold: 0.15, rootMargin: "0px 0px -10% 0px" });
   document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+
+  /* Nav ganha sombra quando a página sai do topo */
+  const nav = document.querySelector(".nav");
+  const topMark = document.createElement("div");
+  topMark.style.cssText = "position:absolute;top:0;left:0;width:1px;height:24px;pointer-events:none";
+  document.body.prepend(topMark);
+  new IntersectionObserver(([en]) => nav.classList.toggle("scrolled", !en.isIntersecting)).observe(topMark);
 
   /* FAQ */
   document.querySelectorAll(".faq-q").forEach((btn) => {
