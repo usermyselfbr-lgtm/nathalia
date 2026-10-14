@@ -1255,12 +1255,9 @@ p,li{text-wrap:pretty}
 <section class="section alt" id="owner">
   <div class="wrap owner">
     <div class="owner-visual reveal">
-    <div class="arch">
-      <!-- TROCAR (prioridade): retrato real da Nathalia, vertical 4:5, de preferência trabalhando ou sorrindo. Use:
-           <img src="img/nathalia-800.webp" srcset="img/nathalia-800.webp 800w, img/nathalia-1200.webp 1200w" sizes="(min-width:900px) 360px, 90vw"
-                width="800" height="1000" alt="Nathalia, owner of D’Paula Cleaning Specialist" loading="lazy">
-           e apague o <span class="mono-mark"> abaixo. -->
-      <span class="mono-mark" aria-hidden="true">D’P</span>
+    <div class="arch has-photo">
+      <img src="img/nathalia-800.webp" srcset="img/nathalia-800.webp 800w, img/nathalia-1200.webp 1200w" sizes="(min-width:900px) 360px, 90vw"
+           width="800" height="1000" alt="Nathalia, owner of D’Paula Cleaning Specialist" loading="lazy">
     </div>
       <div class="float o1">
         <span class="ico"><svg aria-hidden="true"><use href="#i-msg"/></svg></span>
@@ -1346,9 +1343,7 @@ p,li{text-wrap:pretty}
       </ul>
     </div>
 
-    <!-- TROCAR (obrigatório antes de publicar): cole em FORM_ENDPOINT (no script) a URL do Formspree
-         (formspree.io, grátis) ou de um webhook do n8n. Sem endpoint, o envio abre o e-mail do visitante
-         já preenchido para dpaulacleaning@outlook.com, e ele ainda precisa apertar "enviar". -->
+<!-- Envio: FORM_ENDPOINT (no script, no fim do arquivo) aponta para o webhook do n8n que manda o lead por WhatsApp. -->
     <form class="form reveal" id="quote-form" novalidate style="--i:2" aria-labelledby="form-title">
       <div class="form-body">
         <div class="form-head">
@@ -1564,9 +1559,9 @@ p,li{text-wrap:pretty}
 
 <script>
 (() => {
-  /* TROCAR (obrigatório): URL do Formspree (ex.: "https://formspree.io/f/abcdwxyz") ou de um webhook do n8n.
-     Vazio = o envio abre o e-mail do visitante já preenchido (ele ainda precisa apertar "enviar"). */
-  const FORM_ENDPOINT = "";
+  /* Webhook do n8n (fluxo "D’Paula site → lead no WhatsApp", criado em 14/10/2026): cada pedido de orçamento
+     vira uma mensagem de WhatsApp com os dados do lead. Vazio = o envio abre o e-mail do visitante já preenchido. */
+  const FORM_ENDPOINT = "https://n8n-production-87b7.up.railway.app/webhook/dpaula-site-lead";
   const OWNER_EMAIL = "dpaulacleaning@outlook.com";
   const OWNER_TEXT = "(720) 701-1667";
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
